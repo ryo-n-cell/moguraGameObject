@@ -1,0 +1,83 @@
+属性、要素
+src→アトリビュート
+
+Document Object model
+HTMLのテキスト、の文字情報、タグに
+ツールでDocument グローバルなオブジェクト＝展開されるとHTMLが出てくる
+
+オブジェクトを通して。。。
+・プログラミングは、データに何の名前を付けるのか？
+・そのプログラムには何のデータが必要なのか？
+・型はどのようにすればよいのか？
+・情報の階層はどのような形がよいのか？
+を考えてみよう。
+
+本日の流れ
+・DOM操作
+・forを使用して要素を変更,加えさせる
+・onclick要素を付け加える場合、付け加えた関数にThisで要素を取得する。
+・Setintervalでモグラの変化を起こす
+・関数の渡し方、返し方。
+
+function say (){
+return "こんにちは！"
+}
+>undefined
+
+var hoge = say
+var fuga = say()
+>undefined
+
+say()
+"こんにちは！"
+
+hoge
+ƒ say (){
+return "こんにちは！"
+}
+
+fuga
+"こんにちは！"
+
+＝関数は（）演算子で実行可能なオブジェクトである！
+
+※変数にオブジェクトを持たせる
+　オブジェクトに関数を持たせることもできる。
+    let mogura = {
+      face:{
+        hide:"",
+        nomal:"images\nomal.png",
+        hit:"images\hit.png"
+      },
+      action:{
+        hit: function(){
+          this.src = this.face.hit
+        },
+        appear: function(){
+          this.src = this.face.nomal
+        },
+        hide: function(){
+          this.src = this.face.hide
+        }
+      }
+    }
+関数にオブジェクトを持たせることもできる。
+		function Mogura (el) {
+			this.body = el
+			this.face = {
+				hide: "", // 隠れている時
+				normal: "images/normal.png", // 出現した時
+				hit: "imags/hit.png", // 叩かれた時
+			},
+			this.action = {
+				hit: function(){
+					this.body.src = this.face.hit
+				},
+				appear: function(){
+					this.body.src = this.face.normal
+				},
+				hide: function(){
+					this.body.src = this.face.hide
+				},
+			}
+		}

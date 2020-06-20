@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+​
 <head>
 	<meta charset="utf-8">
 	<title>もぐらたたきゲーム</title>
@@ -8,17 +8,17 @@
 		#game {
 			cursor: url(./images/hummer.cur) 40 40, auto;
 		}
-
+​
 		h1 {
 			text-align: center;
 			margin: auto 0px;
 			background: rgba(140, 248, 155, 0.7);
 		}
-
+​
 		h1>img {
 			width: 320px;
 		}
-
+​
 		body {
 			margin: 0px auto;
 			background-image: url(./images/草-noitem.png);
@@ -27,7 +27,7 @@
 			background-position: center;
 			background-size: cover;
 		}
-
+​
 		.container {
 			width: 520px;
 			height: 160px;
@@ -39,45 +39,45 @@
 			display: -o-flex;
 			display: flex;
 		}
-
+​
 		.container img {
 			margin: 20px;
 			width: 140px;
 		}
-
+​
 		.wrapper {
 			margin: 0px auto;
 			display: flex;
 		}
-
+​
 		img {
 			width: 213px;
 		}
-
+​
 		.hit-mogura {
 			cursor: url(./images/hummer2.cur) 20 20, auto;
 		}
-
+​
 		.uwagaki {
 			position: absolute;
 			top: 0;
 			left: 0;
 		}
-
+​
 		.relative {
 			position: relative;
 		}
-
+​
 		.field {
 			margin: 40px;
 		}
 	</style>
-
 </head>
-
+​
 <body id="game">
 	<div class="field">
-		<h1><img src="images/title.png" alt=""></h1>
+		<h1><img onmouseover="hello()" src="images/title.png" alt=""></h1>
+​
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
@@ -121,51 +121,54 @@
 			</div>
 		</div>
 	</div>
-
+​
 	<script>
-		let moguras = document.getElementsByClassName("mogura")
-    let mogura = {
-      face:{
-        hide:"",
-        nomal:"images\nomal.png",
-        hit:"images\hit.png"
-      },
-      action:{
-        hit: function(){
-          this.src = this.face.hit
-        },
-        appear: function(){
-          this.src = this.face.nomal
-        },
-        hide: function(){
-          this.src = this.face.hide
-        }
-      }
-    }
-		intialize()
-    window.setInterval(appear,800)
-
-		// 叩かれた時の処理
-		function hit () {
-		// 引数はThisで要素を取得している
-			// console.log(this)
-			this.src = ""
-		}
-
-		function appear() {
-			let num = Math.floor(Math.random()*9)
-			moguras[num].src = "images/nomal.png"
-		}
-
-		function intialize(){
-			for (let i in moguras) {
-			moguras[i].onclick = hit
-			//hit()としないように！関数の実行ではない
-			//hitだと関数の定義自体を付与することになる
+		let moguras = []
+​
+		function Mogura (el) {
+			this.body = el
+			this.face = {
+				hide: "", // 隠れている時
+				normal: "images/normal.png", // 出現した時
+				hit: "imags/hit.png", // 叩かれた時
+			},
+			this.action = {
+				hit: function(){
+					this.body.src = this.face.hit
+          setTimeout(this.hide,200)
+				},
+				appear: function(){
+					this.body.src = this.face.normal
+          setTimeout(this.hide,200)
+				},
+				hide: function(){
+					this.body.src = this.face.hide
+          setTimeout(this.appear,200)
+				},
 			}
 		}
-
+​
+		function initialize() {
+			// 全てのモグラに対して、クリックされたイベントを登録する
+			let arr = document.getElementsByClassName("mogura") // 9体分のモグラ
+			for (let i=0; i < arr.length; i ++) {
+				moguras.push(new Mogura(arr[i]))
+			}
+		}
+​
+		initialize()
+​
 	</script>
 </body>
-
+​
 </html>
+
+<!-- データは何を持っているか？
+どのような動き（メソッド）をするのか？
+→モグラはどんなデータを持っている？
+  1. 通常の顔の画像データ
+  2. 叩かれた時の顔の画像データ
+  モグラができることは何？
+  1. 叩かれると消えることができる
+  2. 叩かれると、痛い顔になる
+  3. 穴から出現することができる -->
