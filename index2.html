@@ -59,7 +59,15 @@
     let moguras = []
     var countUpValue = 0
 
+    function gameMaster(){
+      this.hitCount = () => {
+        countUpValue++;
+        console.log(countUpValue);
+      }
+    }
+
 		function Mogura (el) {
+      this.gameMaster = gameMaster
 			this.body = el
 			this.face = {
 				hide: "", // 隠れている時
@@ -67,7 +75,7 @@
 				hit: "images/mogura/hit.png", // 叩かれた時
 			},
       this.hit = () => {
-        countUp()
+        this.gameMaster.hitCount()
 				this.body.src = this.face.hit
 				setTimeout(this.hide, 200)
 			}
@@ -94,18 +102,11 @@
     initialize ()
 
     countScore()
-
-    function countUp(){
-    countUpValue++;
-    console.log(countUpValue);
-    }
     
     function countScore(){
       alert("Start")
       setTimeout(() => alert("END"),10000);
     }
-
-
 	</script>
 </body>
 
